@@ -67,12 +67,37 @@
         }
         .receipt-box { background: white; padding: 25px; width: 350px; border-radius: 8px; }
 
-        #ticket-print { font-family: 'Courier New', monospace; font-size: 13px; }
+        #ticket-print {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            width: 72mm;
+            margin: 0 auto;
+            line-height: 1.25;
+        }
+
+        @page {
+            size: 80mm auto;
+            margin: 0;
+        }
 
         @media print {
+            body { background: white; }
             body * { visibility: hidden; }
             #ticket-print, #ticket-print * { visibility: visible; }
-            #ticket-print { position: absolute; left: 0; top: 0; width: 100%; }
+            #ticket-print {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 72mm;
+                margin: 0;
+                padding: 2mm 3mm;
+            }
+            .receipt-box {
+                width: auto;
+                padding: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
             .no-print { display: none !important; }
         }
     </style>
