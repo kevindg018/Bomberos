@@ -30,8 +30,8 @@
 
         /* Dashboard */
         #dashboard { display: none; padding: 20px; max-width: 1300px; margin: 0 auto; }
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
+        header {
+            display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 10px;
             border-bottom: 4px solid var(--primary);
         }
@@ -42,8 +42,8 @@
         .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; align-items: end; }
         .form-group { margin-bottom: 10px; }
         label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; color: var(--secondary); }
-        input { 
-            width: 100%; padding: 0.7rem; border: 1px solid #cbd5e1; 
+        input {
+            width: 100%; padding: 0.7rem; border: 1px solid #cbd5e1;
             border-radius: 0.5rem; font-size: 1rem;
         }
 
@@ -66,7 +66,7 @@
             background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000;
         }
         .receipt-box { background: white; padding: 25px; width: 350px; border-radius: 8px; }
-        
+
         #ticket-print { font-family: 'Courier New', monospace; font-size: 13px; }
 
         @media print {
@@ -154,7 +154,7 @@
                     <input type="password" id="new-password">
                 </div>
                 <button onclick="crearUsuario()" style="width: 100%; margin-bottom: 15px;">Crear Usuario</button>
-                
+
                 <table id="tabla-usuarios">
                     <thead>
                         <tr>
@@ -197,9 +197,9 @@
         function iniciarSesion() {
             const u = document.getElementById('login-user').value;
             const p = document.getElementById('login-pass').value;
-            
+
             const existe = dbUsuarios.find(x => x.user === u && x.pass === p);
-            
+
             if(existe) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
@@ -222,7 +222,17 @@
             const v = { id: Date.now(), placa, tipo, tarifa, entrada: new Date().toISOString() };
             dbVehiculos.push(v);
             guardarYRefrescar();
-            
+
+            const info = `
+                <p><b>PLACA:</b> ${v.placa}</p>
+                <p><b>TIPO:</b> ${v.tipo}</p>
+                <p><b>INGRESO:</b> ${new Date(v.entrada).toLocaleString()}</p>
+                <p><b>TARIFA HORA:</b> $${v.tarifa}</p>
+                <h2 style="text-align:center; border:none; margin-top:10px;">TICKET DE ENTRADA</h2>
+            `;
+
+            abrirModal(info);
+
             document.getElementById('placa').value = "";
             document.getElementById('tipo').value = "";
             document.getElementById('tarifa').value = "";
@@ -278,11 +288,11 @@
             const p = document.getElementById('new-password').value;
 
             if(!u || !p) return alert("Defina nombre y contraseña");
-            
+
             dbUsuarios.push({user: u, pass: p});
             localStorage.setItem('corinto_users', JSON.stringify(dbUsuarios));
             renderUsuarios();
-            
+
             document.getElementById('new-username').value = "";
             document.getElementById('new-password').value = "";
         }
