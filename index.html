@@ -75,29 +75,53 @@
             line-height: 1.25;
         }
 
-        @page {
-            size: 80mm auto;
-            margin: 0;
-        }
 
         @media print {
-            body { background: white; }
-            body * { visibility: hidden; }
-            #ticket-print, #ticket-print * { visibility: visible; }
-            #ticket-print {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 72mm;
-                margin: 0;
-                padding: 2mm 3mm;
+            @page { size: 80mm auto; margin: 0; }
+
+            html, body {
+                width: 80mm;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: hidden !important;
+                background: white;
             }
+
+            body * { visibility: hidden; }
+
+            #modal-overlay,
+            #modal-overlay .receipt-box,
+            #ticket-print,
+            #ticket-print * {
+                visibility: visible;
+            }
+
+            #modal-overlay {
+                position: static !important;
+                width: auto !important;
+                height: auto !important;
+                background: transparent !important;
+                display: block !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
             .receipt-box {
-                width: auto;
-                padding: 0;
+                width: 72mm;
+                padding: 2mm 3mm 0 3mm;
+                margin: 0;
                 border-radius: 0;
                 box-shadow: none;
             }
+
+            #ticket-print {
+                position: static;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
             .no-print { display: none !important; }
         }
     </style>
